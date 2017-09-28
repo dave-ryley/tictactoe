@@ -11,11 +11,9 @@ package tictactoe;
  */
 public class TicTacToe {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String [] args)
+    {
+        UI_Menu mainMenu = new UI_Menu();
     }
     
 }
