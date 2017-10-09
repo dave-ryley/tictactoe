@@ -15,15 +15,15 @@ import java.net.*;
 public class TicTacToeClient {
     
     private static Socket socket;
-    private static PrintWriter out;
-    private static BufferedReader in;
+    private static DataInputStream in;
+    private static DataOutputStream out;
     
     public static void listenSocket() {
         //Create socket connection
         try {
             socket = new Socket("127.0.0.1", 4444);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out = new DataOutputStream(socket.getOutputStream());
+            in = new DataInputStream(socket.getInputStream());
         } catch (UnknownHostException e) {
             System.out.println("Unknown host:");
             System.exit(1);
@@ -41,14 +41,13 @@ public class TicTacToeClient {
 //        gameUI.setGame(game);
 //        gameUI.setVisible(true);
         
-        System.out.println("Attempt to access socket");
         listenSocket();
-        out.println(Action.LOGIN);
         System.out.println("Connected, Printing " + Action.LOGIN);
-        out.println("1@ttt.com\npassword1");
         try {
+            out.writeInt(Action.LOGIN);
+            out.writeUTF("1@ttt.com\npassword1");
             String line;
-            while((line = in.readLine()) != null)
+            while((line = in.readUTF()) != null)
             {
                 System.out.print(line);
             }

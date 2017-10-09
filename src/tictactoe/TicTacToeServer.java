@@ -20,22 +20,24 @@ public class TicTacToeServer {
             String line;
             while((line = in.readUTF()) != null)
             {
-                input += line;
+                input += line + "\n";
+                System.out.println(line);
             }
             
         } catch(IOException e) {
             System.out.println("IOException on socket listen: " + e);
         }
+        System.out.println("Finished reading");
         return input;
     }
 
-    static void handleLogin(DataInputStream in, PrintStream out)
+    static void handleLogin(DataInputStream in, DataOutputStream out) throws IOException
     {
         String input = parseDataStreamAsString(in);
         String [] inputArray = input.split("\n");
         User user = findUser( inputArray[0], inputArray[1] );
-        out.print(Action.LOGIN_RESPONSE);
-        out.print(user);
+        out.writeInt(Action.LOGIN_RESPONSE);
+        out.writeUTF(user.toString());
     }
 
     private synchronized static User findUser(String email, String password)

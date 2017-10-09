@@ -5,12 +5,8 @@
  */
 package tictactoe;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.Socket;
+import java.io.*;
+import java.net.*;
 
 /**
  *
@@ -29,31 +25,25 @@ public class ServerConnection implements Runnable {
 
         input="";
         
-        System.out.println("Connection opened");
-        String testString;
-        int testInt;
-
         try {
             // Get input from the client
-            BufferedReader in = new BufferedReader(new InputStreamReader(server.getInputStream()));
-            PrintStream out = new PrintStream(server.getOutputStream());
+            DataInputStream in = new DataInputStream(server.getInputStream());
+            DataOutputStream out = new DataOutputStream(server.getOutputStream());
             boolean running = true;
             while(running)
             {
                 // Reading From Client
-                System.out.println("Attempting to read...");
-                System.out.println(in.readLine());
-//                switch(testInt)
-//                {
-//                    case Action.LOGIN:
-//                        System.out.println("Login action started");
-//                        TicTacToeServer.handleLogin(in, out);
-//                        break;
-//                    case Action.REGISTER:
-//                        break;
-//                    default:
-//                        System.out.println("Could not determine operation");
-//                }
+                switch(in.readInt())
+                {
+                    case Action.LOGIN:
+                        System.out.println("Login action started");
+                        TicTacToeServer.handleLogin(in, out);
+                        break;
+                    case Action.REGISTER:
+                        break;
+                    default:
+                        System.out.println("Could not determine operation");
+                }
 //                while((line = in.readUTF()) != null && !line.equals("."))
 //                {
 //                    input=input + line;
