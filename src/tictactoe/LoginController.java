@@ -16,15 +16,16 @@ import java.net.Socket;
  */
 public class LoginController {
     
+    private ClientController client;
     private LoginUI ui;
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
     
-    public LoginController()
+    public LoginController(ClientController client)
     {
+        this.client = client;
         ui = new LoginUI(this);
-        ui.setVisible(true);
     }
 
     void setup(Socket socket, DataInputStream in, DataOutputStream out) {
@@ -45,7 +46,8 @@ public class LoginController {
                 ui.setMessageText("Login Successful!");
                 User user = new User(in.readUTF());
                 // Continue here to switch to lobby...
-                user.isValid();
+                hide();
+                client.openLobby(user);
             }
             else
             {
@@ -55,6 +57,16 @@ public class LoginController {
             System.out.println("Read failed");
             System.exit(1);
         }
-        
+    }
+    
+    public void view()
+    {
+        ui.setVisible(true);
+        ui.setMessageText("Welcome To Tic-Tac-Toe!");
+    }
+    
+    public void hide()
+    {
+        ui.setVisible(false);
     }
 }
