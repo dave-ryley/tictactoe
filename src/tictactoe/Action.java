@@ -9,11 +9,8 @@ package tictactoe;
  *
  * @author davidryley
  */
-public class TicTacToe {
-
-    public static void main(String [] args)
-    {
-        UI_Menu mainMenu = new UI_Menu();
-    }
-    
+public class Action {
+    public static final int LOGIN = 0;
+    public static final int REGISTER = 1;
+    public static final int LOGIN_RESPONSE = 2;
 }
