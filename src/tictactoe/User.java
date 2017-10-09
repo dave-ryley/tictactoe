@@ -15,6 +15,15 @@ public class User {
     private String username;
     private String password;
     
+    public User(String userString)
+    {
+        String [] stringSplit = userString.split(Action.SEPERATOR);
+        id = Integer.parseInt(stringSplit[0]);
+        email = stringSplit[1];
+        username = stringSplit[2];
+        password = stringSplit[3];
+    }
+    
     public User(int id, String email, String username, String password)
     {
         this.id = id;
@@ -27,9 +36,9 @@ public class User {
     public String toString()
     {
         String result = "";
-        result += id + "\n";
-        result += email + "\n";
-        result += username + "\n";
+        result += id + Action.SEPERATOR;
+        result += email + Action.SEPERATOR;
+        result += username + Action.SEPERATOR;
         result += password;
         return result;
     }
@@ -88,6 +97,10 @@ public class User {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    boolean isValid() {
+        return id != 0;
     }
     
     

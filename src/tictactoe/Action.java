@@ -10,7 +10,9 @@ package tictactoe;
  * @author davidryley
  */
 public class Action {
+    public static final int ERROR = -1;
     public static final int LOGIN = 0;
-    public static final int REGISTER = 1;
-    public static final int LOGIN_RESPONSE = 2;
+    public static final int LOGIN_RESPONSE = 1;
+    public static final String MESSAGE_END = "###";
+    public static final String SEPERATOR = "zZz";
 }

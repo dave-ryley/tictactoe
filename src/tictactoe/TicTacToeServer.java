@@ -7,7 +7,6 @@ package tictactoe;
 
 import java.io.*;
 import java.net.*;
-import java.security.*;
 
 public class TicTacToeServer {
     
@@ -18,38 +17,45 @@ public class TicTacToeServer {
         String input = "";
         try {
             String line;
-            while((line = in.readUTF()) != null)
+            while(!(line = in.readUTF()).equals(Action.MESSAGE_END))
             {
-                input += line + "\n";
-                System.out.println(line);
+                input += line + Action.SEPERATOR;
             }
             
         } catch(IOException e) {
             System.out.println("IOException on socket listen: " + e);
         }
-        System.out.println("Finished reading");
         return input;
     }
 
     static void handleLogin(DataInputStream in, DataOutputStream out) throws IOException
     {
         String input = parseDataStreamAsString(in);
-        String [] inputArray = input.split("\n");
+        System.out.println(input);
+        String [] inputArray = input.split(Action.SEPERATOR);
         User user = findUser( inputArray[0], inputArray[1] );
-        out.writeInt(Action.LOGIN_RESPONSE);
-        out.writeUTF(user.toString());
+        if(user.isValid())
+        {
+            out.writeInt(Action.LOGIN_RESPONSE);
+            out.writeUTF(user.toString());
+        }
+        else
+        {
+            out.writeInt(Action.ERROR);
+        }
+//        out.writeUTF(Action.MESSAGE_END);
     }
 
     private synchronized static User findUser(String email, String password)
     {
         // TODO: change this to check a database
-        for(int i = 0; i < users.length; i++)
+        for (User user : users) 
         {
-            if( users[i].getEmail().equals(email) )
+            if (user.getEmail().equals(email)) 
             {
-                if( users[i].getPassword().equals(password) )
+                if (user.getPassword().equals(password)) 
                 {
-                    return users[i];
+                    return user;
                 }
                 break;
             }
@@ -57,7 +63,7 @@ public class TicTacToeServer {
         return new User(0,"","","");
     }
     
-    private static User [] users = {
+    private static final User [] users = {
         new User(1, "1@ttt.com", "user1", "password1"),
         new User(2, "2@ttt.com", "user2", "password2"),
     };

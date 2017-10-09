@@ -36,10 +36,7 @@ public class ServerConnection implements Runnable {
                 switch(in.readInt())
                 {
                     case Action.LOGIN:
-                        System.out.println("Login action started");
                         TicTacToeServer.handleLogin(in, out);
-                        break;
-                    case Action.REGISTER:
                         break;
                     default:
                         System.out.println("Could not determine operation");

@@ -32,6 +32,12 @@ public class TicTacToeClient {
             System.exit(1);
         }
     }
+    
+    public static void launchClient()
+    {
+        LoginController controller = new LoginController();
+        controller.setup(socket, in, out);
+    }
 
     public static void main(String [] args)
     {
@@ -42,19 +48,25 @@ public class TicTacToeClient {
 //        gameUI.setVisible(true);
         
         listenSocket();
-        System.out.println("Connected, Printing " + Action.LOGIN);
-        try {
-            out.writeInt(Action.LOGIN);
-            out.writeUTF("1@ttt.com\npassword1");
-            String line;
-            while((line = in.readUTF()) != null)
-            {
-                System.out.print(line);
-            }
-        } catch (IOException e) {
-            System.out.println("Read failed");
-            System.exit(1);
-        }
+        launchClient();
+//        try {
+//            
+//            
+//            out.writeInt(Action.LOGIN);
+//            out.writeUTF("1@ttt.com\npassword1");
+//            out.writeUTF(Action.MESSAGE_END);
+//            String line;
+//            System.out.println("Attempting to write" + in.readInt());
+//            
+//            while(!(line = in.readUTF()).equals(Action.MESSAGE_END))
+//            {
+//                System.out.println("Printing from Server...");
+//                System.out.print(line);
+//            }
+//        } catch (IOException e) {
+//            System.out.println("Read failed");
+//            System.exit(1);
+//        }
     }
     
 }
