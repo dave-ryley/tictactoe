@@ -8,7 +8,6 @@ package tictactoe;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 
 /**
  *
@@ -18,7 +17,6 @@ public class LoginController {
     
     private ClientController client;
     private LoginUI ui;
-    private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
     
@@ -28,8 +26,7 @@ public class LoginController {
         ui = new LoginUI(this);
     }
 
-    void setup(Socket socket, DataInputStream in, DataOutputStream out) {
-        this.socket = socket;
+    void setup(DataInputStream in, DataOutputStream out) {
         this.in = in;
         this.out = out;
     }
